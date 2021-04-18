@@ -129,7 +129,7 @@ export class gostart {
         for (let r in this.RoutesVisited) {
           if (this.RoutesVisited[r].link == link) {
             visited = true;
-            console.log(`Visited[${i}] ${link}`);
+            // console.log(`Visited[${i}] ${link}`);
             break;
           }
         }
@@ -160,7 +160,7 @@ export class gostart {
     }
     // return { code: "yis", len: this.innerRoutes.length };
     console.log(this.pdfLinks.length);
-    // console.log("INNERROUTES", this.innerRoutes.length);
+    console.log("INNERROUTES", this.innerRoutes.length);
     // return this.pdfLinks;
     if (this.innerRoutes.length == 0 && root) {
       // console.log(this.pdfLinks);
