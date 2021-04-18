@@ -43,7 +43,9 @@ export class gostart {
     const aTag = dom.getElementsByTagName("a");
     const linkTag = await dom.getElementsByTagName("link");
     const totalElements = [...aTag, ...linkTag];
-    this.RoutesVisited.push({ link: url, ALength: aTag.length });
+    if (re) {
+      this.RoutesVisited.push({ link: url, ALength: aTag.length });
+    }
     // console.log(totalElements.length);
     // await totalElements.map((d) => {
     //   if (d.getAttribute("href")) {
