@@ -79,10 +79,8 @@ export class gostart {
           continue;
         }
         if (d.getAttribute("href").includes(".pdf")) {
-          // console.log(d.getAttribute("href").includes(".pdf"));
           this.pdfLinks.push(d.getAttribute("href"));
-        }
-        if (d.getAttribute("href")[0] === "/") {
+        } else if (d.getAttribute("href")[0] === "/") {
           this.innerRoutes.push(d.getAttribute("href"));
         } else if (d.getAttribute("href").includes("http")) {
           if (d.getAttribute("href").includes(this.url)) {
@@ -90,8 +88,6 @@ export class gostart {
           } else {
             this.outerRoutes.push(d.getAttribute("href"));
           }
-        } else if (d.getAttribute("href").includes(".pdf")) {
-          this.pdfLinks.push(d.getAttribute("href"));
         } else {
           this.idRoutes.push(d.getAttribute("href"));
         }
