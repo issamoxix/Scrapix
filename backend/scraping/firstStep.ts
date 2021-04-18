@@ -11,6 +11,7 @@ export class gostart {
   pdfLinks: Array<any> = [];
   RoutesVisited: Array<any> = [];
   BrokenRoutes: Array<any> = [];
+  Kill: boolean = false;
   Routes: object = {
     outerRoutes: this.outerRoutes,
     idRoutes: this.idRoutes,
@@ -35,6 +36,7 @@ export class gostart {
     // return "Weee";
     // const response = await axios.get(url);
     if (this.pdfLinks.length >= 400) {
+      this.Kill = true;
       return this.pdfLinks;
     }
     return axios
@@ -116,6 +118,9 @@ export class gostart {
 
   async parseInnerRoutes(root = false) {
     for (let i in this.innerRoutes) {
+      if (this.Kill) {
+        break;
+      }
       let d = this.innerRoutes[i];
       try {
         this.innerRoutes.splice(this.innerRoutes.indexOf("/"), 1);
