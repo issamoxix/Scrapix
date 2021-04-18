@@ -69,6 +69,15 @@ export class gostart {
     for (let i in totalElements) {
       let d = totalElements[i];
       if (d.getAttribute("href")) {
+        if (
+          d.getAttribute("href").includes(".css") ||
+          d.getAttribute("href").includes("_next") ||
+          d.getAttribute("href").includes(".png") ||
+          d.getAttribute("href").includes(".ico") ||
+          d.getAttribute("href").includes(".js")
+        ) {
+          continue;
+        }
         if (d.getAttribute("href").includes(".pdf")) {
           // console.log(d.getAttribute("href").includes(".pdf"));
           this.pdfLinks.push(d.getAttribute("href"));
@@ -134,12 +143,7 @@ export class gostart {
         if (visited) {
           continue;
         }
-        if (
-          link.includes(".css") ||
-          link.includes(".ico") ||
-          link.includes(".png")
-        )
-          continue;
+
         console.log(`PARSING[${i}] ${link} D=${d}`);
         // console.log(link);
         this.innerRoutes.splice(index, 1);
