@@ -43,7 +43,29 @@ export class gostart {
     const totalElements = [...aTag, ...linkTag];
     this.RoutesVisited.push({ link: url, ALength: aTag.length });
     // console.log(totalElements.length);
-    await totalElements.map((d) => {
+    // await totalElements.map((d) => {
+    //   if (d.getAttribute("href")) {
+    //     if (d.getAttribute("href").includes(".pdf")) {
+    //       // console.log(d.getAttribute("href").includes(".pdf"));
+    //       this.pdfLinks.push(d.getAttribute("href"));
+    //     }
+    //     if (d.getAttribute("href")[0] === "/") {
+    //       this.innerRoutes.push(d.getAttribute("href"));
+    //     } else if (d.getAttribute("href").includes("http")) {
+    //       if (d.getAttribute("href").includes(this.url)) {
+    //         this.innerRoutes.push(d.getAttribute("href"));
+    //       } else {
+    //         this.outerRoutes.push(d.getAttribute("href"));
+    //       }
+    //     } else if (d.getAttribute("href").includes(".pdf")) {
+    //       this.pdfLinks.push(d.getAttribute("href"));
+    //     } else {
+    //       this.idRoutes.push(d.getAttribute("href"));
+    //     }
+    //   }
+    // });
+    for (let i in totalElements) {
+      let d = totalElements[i];
       if (d.getAttribute("href")) {
         if (d.getAttribute("href").includes(".pdf")) {
           // console.log(d.getAttribute("href").includes(".pdf"));
@@ -63,7 +85,7 @@ export class gostart {
           this.idRoutes.push(d.getAttribute("href"));
         }
       }
-    });
+    }
 
     if (re) return true;
     let parsing = await this.parseInnerRoutes(true);
