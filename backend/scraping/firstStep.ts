@@ -22,14 +22,16 @@ export class gostart {
   }
   //   get the website Dom and store type of links and return them
   async initiate() {
-    let d = await this.getDom(this.url);
+    this.getDom(this.url).then((d) => {
+      pdfs: d;
+    });
     // console.log(d);
-    return {
-      pdfs: await d,
-      pdfLength: this.pdfLinks.length,
-      VisitedLinks: this.RoutesVisited.length,
-      BrokenRoutes: this.BrokenRoutes.length,
-    };
+    // return {
+    //   pdfs: await d,
+    //   pdfLength: this.pdfLinks.length,
+    //   VisitedLinks: this.RoutesVisited.length,
+    //   BrokenRoutes: this.BrokenRoutes.length,
+    // };
   }
   async getDom(url, re = false) {
     // return "Weee";
