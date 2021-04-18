@@ -158,7 +158,12 @@ export class gostart {
     }
     // return { code: "yis", len: this.innerRoutes.length };
     // console.log(this.pdfLinks.length);
-    console.log("INNERROUTES", this.innerRoutes.length, root);
+    console.log(
+      "INNERROUTES",
+      this.innerRoutes.length,
+      this.innerRoutes.length <= 5 && this.innerRoutes,
+      root
+    );
     // return this.pdfLinks;
     if (this.innerRoutes.length == 0 && root) {
       // console.log(this.pdfLinks);
