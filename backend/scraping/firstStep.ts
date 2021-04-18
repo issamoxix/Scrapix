@@ -25,7 +25,7 @@ export class gostart {
     let d = await this.getDom(this.url);
     // console.log(d);
     return {
-      pdfs: await d,
+      pdfs: d ? d : this.pdfLinks,
       pdfLength: this.pdfLinks.length,
       VisitedLinks: this.RoutesVisited.length,
       BrokenRoutes: this.BrokenRoutes.length,
@@ -33,70 +33,77 @@ export class gostart {
   }
   async getDom(url, re = false) {
     // return "Weee";
-    const response = await axios.get(url);
-    const text = response.data;
-    const dom = new beautifuldom(text);
-    // const body = dom.getElementsByTagName("body")[0];
-    const title = dom.getElementsByTagName("title");
-    const aTag = dom.getElementsByTagName("a");
-    const linkTag = await dom.getElementsByTagName("link");
-    const totalElements = [...aTag, ...linkTag];
-    if (re) {
-      this.RoutesVisited.push({ link: url, ALength: aTag.length });
-    }
-    // console.log(totalElements.length);
-    // await totalElements.map((d) => {
-    //   if (d.getAttribute("href")) {
-    //     if (d.getAttribute("href").includes(".pdf")) {
-    //       // console.log(d.getAttribute("href").includes(".pdf"));
-    //       this.pdfLinks.push(d.getAttribute("href"));
-    //     }
-    //     if (d.getAttribute("href")[0] === "/") {
-    //       this.innerRoutes.push(d.getAttribute("href"));
-    //     } else if (d.getAttribute("href").includes("http")) {
-    //       if (d.getAttribute("href").includes(this.url)) {
-    //         this.innerRoutes.push(d.getAttribute("href"));
-    //       } else {
-    //         this.outerRoutes.push(d.getAttribute("href"));
-    //       }
-    //     } else if (d.getAttribute("href").includes(".pdf")) {
-    //       this.pdfLinks.push(d.getAttribute("href"));
-    //     } else {
-    //       this.idRoutes.push(d.getAttribute("href"));
-    //     }
-    //   }
-    // });
-    for (let i in totalElements) {
-      let d = totalElements[i];
-      if (d.getAttribute("href")) {
-        if (
-          d.getAttribute("href").includes(".css") ||
-          d.getAttribute("href").includes("_next") ||
-          d.getAttribute("href").includes(".png") ||
-          d.getAttribute("href").includes(".ico") ||
-          d.getAttribute("href").includes(".js")
-        ) {
-          continue;
-        }
-        if (d.getAttribute("href").includes(".pdf")) {
-          this.pdfLinks.push(d.getAttribute("href"));
-        } else if (d.getAttribute("href")[0] === "/") {
-          this.innerRoutes.push(d.getAttribute("href"));
-        } else if (d.getAttribute("href").includes("http")) {
-          if (d.getAttribute("href").includes(this.url)) {
-            this.innerRoutes.push(d.getAttribute("href"));
-          } else {
-            this.outerRoutes.push(d.getAttribute("href"));
-          }
-        } else {
-          this.idRoutes.push(d.getAttribute("href"));
-        }
-      }
-    }
+    // const response = await axios.get(url);
 
-    if (re) return true;
-    let parsing = await this.parseInnerRoutes(true);
-    return await parsing;
+    return axios
+      .get(url)
+      .then(async (response) => {
+        const text = response.data;
+        const dom = new beautifuldom(text);
+        // const body = dom.getElementsByTagName("body")[0];
+        const title = dom.getElementsByTagName("title");
+        const aTag = dom.getElementsByTagName("a");
+        const linkTag = dom.getElementsByTagName("link");
+        const totalElements = [...aTag, ...linkTag];
+        if (re) {
+          this.RoutesVisited.push({ link: url, ALength: aTag.length });
+        }
+
+        // console.log(totalElements.length);
+        // await totalElements.map((d) => {
+        //   if (d.getAttribute("href")) {
+        //     if (d.getAttribute("href").includes(".pdf")) {
+        //       // console.log(d.getAttribute("href").includes(".pdf"));
+        //       this.pdfLinks.push(d.getAttribute("href"));
+        //     }
+        //     if (d.getAttribute("href")[0] === "/") {
+        //       this.innerRoutes.push(d.getAttribute("href"));
+        //     } else if (d.getAttribute("href").includes("http")) {
+        //       if (d.getAttribute("href").includes(this.url)) {
+        //         this.innerRoutes.push(d.getAttribute("href"));
+        //       } else {
+        //         this.outerRoutes.push(d.getAttribute("href"));
+        //       }
+        //     } else if (d.getAttribute("href").includes(".pdf")) {
+        //       this.pdfLinks.push(d.getAttribute("href"));
+        //     } else {
+        //       this.idRoutes.push(d.getAttribute("href"));
+        //     }
+        //   }
+        // });
+        for (let i in totalElements) {
+          let d = totalElements[i];
+          if (d.getAttribute("href")) {
+            if (
+              d.getAttribute("href").includes(".css") ||
+              d.getAttribute("href").includes("_next") ||
+              d.getAttribute("href").includes(".png") ||
+              d.getAttribute("href").includes(".ico") ||
+              d.getAttribute("href").includes(".js")
+            ) {
+              continue;
+            }
+            if (d.getAttribute("href").includes(".pdf")) {
+              this.pdfLinks.push(d.getAttribute("href"));
+            } else if (d.getAttribute("href")[0] === "/") {
+              this.innerRoutes.push(d.getAttribute("href"));
+            } else if (d.getAttribute("href").includes("http")) {
+              if (d.getAttribute("href").includes(this.url)) {
+                this.innerRoutes.push(d.getAttribute("href"));
+              } else {
+                this.outerRoutes.push(d.getAttribute("href"));
+              }
+            } else {
+              this.idRoutes.push(d.getAttribute("href"));
+            }
+          }
+        }
+
+        if (re) return true;
+        let parsing = await this.parseInnerRoutes(true);
+        return await parsing;
+      })
+      .catch(() => true);
 
     // return {
     //   title: title[0].innerText,
