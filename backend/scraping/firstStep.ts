@@ -66,7 +66,7 @@ export class gostart {
     });
 
     if (re) return true;
-    let parsing = await this.parseInnerRoutes();
+    let parsing = await this.parseInnerRoutes(true);
 
     return await parsing;
 
@@ -77,7 +77,7 @@ export class gostart {
     // };
   }
 
-  async parseInnerRoutes() {
+  async parseInnerRoutes(root = false) {
     for (let i in this.innerRoutes) {
       let d = this.innerRoutes[i];
       try {
@@ -133,10 +133,10 @@ export class gostart {
       }
     }
     // return { code: "yis", len: this.innerRoutes.length };
-    console.log(this.pdfLinks.length);
-    console.log("INNERROUTES", this.innerRoutes.length);
+    // console.log(this.pdfLinks.length);
+    // console.log("INNERROUTES", this.innerRoutes.length);
     // return this.pdfLinks;
-    if (this.innerRoutes.length == 0) {
+    if (this.innerRoutes.length == 0 && root) {
       // console.log(this.pdfLinks);
       return this.pdfLinks;
     }
