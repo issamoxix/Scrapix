@@ -34,7 +34,9 @@ export class gostart {
   async getDom(url, re = false) {
     // return "Weee";
     // const response = await axios.get(url);
-
+    if (this.pdfLinks.length >= 400) {
+      return this.pdfLinks;
+    }
     return axios
       .get(url)
       .then(async (response) => {
