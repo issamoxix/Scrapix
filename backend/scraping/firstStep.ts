@@ -111,6 +111,7 @@ export class gostart {
         console.log(
           "YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
         );
+        this.RoutesVisited.push({ link: url, ALength: 0 });
         return true;
       });
 
