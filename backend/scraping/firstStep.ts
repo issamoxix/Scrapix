@@ -22,9 +22,11 @@ export class gostart {
   }
   //   get the website Dom and store type of links and return them
   async initiate() {
-    this.getDom(this.url).then((d) => {
-      pdfs: d;
-    });
+    this.getDom(this.url).then((d) =>
+      console.log({
+        pdfs: d,
+      })
+    );
     // console.log(d);
     // return {
     //   pdfs: await d,
@@ -160,7 +162,7 @@ export class gostart {
     }
     // return { code: "yis", len: this.innerRoutes.length };
     console.log(this.pdfLinks.length);
-    console.log("INNERROUTES", this.innerRoutes.length);
+    console.log("INNERROUTES", this.innerRoutes.length, root);
     // return this.pdfLinks;
     if (this.innerRoutes.length == 0 && root) {
       // console.log(this.pdfLinks);
