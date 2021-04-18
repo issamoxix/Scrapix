@@ -39,6 +39,9 @@ export class gostart {
       this.Kill = true;
       return this.pdfLinks;
     }
+    if (this.RoutesVisited.length % 20 == 0) {
+      setTimeout(() => console.log("REST HERE"), 3000);
+    }
     return axios
       .get(url)
       .then(async (response) => {
