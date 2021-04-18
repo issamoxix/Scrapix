@@ -4,12 +4,13 @@ import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const [inpt, setinpt] = useState();
+  const [lim, setLim] = useState();
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const handleReq = async () => {
     setLoading(true);
     setData();
-    const res = await fetch(`/api/test?url=${inpt}`);
+    const res = await fetch(`/api/test?url=${inpt}&lim=${lim}`);
     const json = await res.json();
     setData(json);
     setLoading(false);
@@ -37,6 +38,12 @@ export default function Home() {
               handleReq();
             }}
           >
+            <input
+              value={lim}
+              onChange={(e) => setLim(e.target.value)}
+              type="text"
+              placeholder="Limite default 400"
+            />
             <input
               value={inpt}
               onChange={(e) => setinpt(e.target.value)}

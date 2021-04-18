@@ -18,24 +18,28 @@ export class gostart {
     innerRoutes: this.innerRoutes,
     pdfLinks: this.pdfLinks,
   };
-  constructor(url: string) {
+  lim: number;
+  constructor(url: string, lim: number) {
     this.url = url;
+    this.lim = lim;
   }
   //   get the website Dom and store type of links and return them
   async initiate() {
-    let d = await this.getDom(this.url);
+    let d = await this.getDom(this.url, false, this.lim);
     // console.log(d);
+    this.Kill = true;
+    console.log("KOROSSEE");
     return {
-      pdfs: d ? d : this.pdfLinks,
       pdfLength: this.pdfLinks.length,
+      pdfs: d ? d : this.pdfLinks,
       VisitedLinks: this.RoutesVisited.length,
       BrokenRoutes: this.BrokenRoutes.length,
     };
   }
-  async getDom(url, re = false) {
+  async getDom(url, re = false, limite = 400) {
     // return "Weee";
     // const response = await axios.get(url);
-    if (this.pdfLinks.length >= 400) {
+    if (this.pdfLinks.length >= limite) {
       this.Kill = true;
       return this.pdfLinks;
     }
@@ -115,7 +119,7 @@ export class gostart {
           "YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
         );
         this.RoutesVisited.push({ link: url, ALength: 0 });
-        return true;
+        return false;
       });
 
     // return {
