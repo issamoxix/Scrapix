@@ -149,11 +149,16 @@ export class gostart {
         this.innerRoutes.splice(index, 1);
         // console.log(link);
         try {
-          let roll = await this.getDom(link, true);
+          // let roll = await this.getDom(link, true);
+          this.getDom(link, true).then((d) => {
+            if (d) {
+              this.parseInnerRoutes();
+            }
+          });
 
-          if (await roll) {
-            this.parseInnerRoutes();
-          }
+          // if (await roll) {
+          //   this.parseInnerRoutes();
+          // }
         } catch {
           this.BrokenRoutes.push(link);
           // console.log(`Error00[${i}] ${link}`);
