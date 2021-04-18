@@ -133,7 +133,9 @@ export class gostart {
       }
     }
     // return { code: "yis", len: this.innerRoutes.length };
-    return this.pdfLinks;
+    console.log(this.pdfLinks.length);
+    console.log("INNERROUTES", this.innerRoutes.length);
+    // return this.pdfLinks;
     if (this.innerRoutes.length == 0) {
       // console.log(this.pdfLinks);
       return this.pdfLinks;

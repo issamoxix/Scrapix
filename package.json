@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "start:prod": "next start -p 80",
-    "export": "next build && next export"
+    "export": "next build && next export",
+    "crunch": "next build && next start -p 80"
   },
   "dependencies": {
     "@types/dom-parser": "^0.1.1",
