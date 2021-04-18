@@ -22,18 +22,14 @@ export class gostart {
   }
   //   get the website Dom and store type of links and return them
   async initiate() {
-    this.getDom(this.url).then((d) =>
-      console.log({
-        pdfs: d,
-      })
-    );
+    let d = await this.getDom(this.url);
     // console.log(d);
-    // return {
-    //   pdfs: await d,
-    //   pdfLength: this.pdfLinks.length,
-    //   VisitedLinks: this.RoutesVisited.length,
-    //   BrokenRoutes: this.BrokenRoutes.length,
-    // };
+    return {
+      pdfs: await d,
+      pdfLength: this.pdfLinks.length,
+      VisitedLinks: this.RoutesVisited.length,
+      BrokenRoutes: this.BrokenRoutes.length,
+    };
   }
   async getDom(url, re = false) {
     // return "Weee";
@@ -131,7 +127,7 @@ export class gostart {
         for (let r in this.RoutesVisited) {
           if (this.RoutesVisited[r].link == link) {
             visited = true;
-            // console.log(`Visited[${i}] ${link}`);
+            console.log(`Visited[${i}] ${link}`);
             break;
           }
         }
@@ -149,16 +145,11 @@ export class gostart {
         this.innerRoutes.splice(index, 1);
         // console.log(link);
         try {
-          // let roll = await this.getDom(link, true);
-          this.getDom(link, true).then((d) => {
-            if (d) {
-              this.parseInnerRoutes();
-            }
-          });
+          let roll = await this.getDom(link, true);
 
-          // if (await roll) {
-          //   this.parseInnerRoutes();
-          // }
+          if (await roll) {
+            this.parseInnerRoutes();
+          }
         } catch {
           this.BrokenRoutes.push(link);
           // console.log(`Error00[${i}] ${link}`);
@@ -166,7 +157,7 @@ export class gostart {
       }
     }
     // return { code: "yis", len: this.innerRoutes.length };
-    console.log(this.pdfLinks.length);
+    // console.log(this.pdfLinks.length);
     console.log("INNERROUTES", this.innerRoutes.length, root);
     // return this.pdfLinks;
     if (this.innerRoutes.length == 0 && root) {
