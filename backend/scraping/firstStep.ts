@@ -107,7 +107,12 @@ export class gostart {
         let parsing = await this.parseInnerRoutes(true);
         return await parsing;
       })
-      .catch(() => true);
+      .catch(() => {
+        console.log(
+          "YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+        );
+        return true;
+      });
 
     // return {
     //   title: title[0].innerText,
