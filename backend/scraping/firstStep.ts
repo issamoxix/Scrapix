@@ -100,7 +100,6 @@ export class gostart {
 
     if (re) return true;
     let parsing = await this.parseInnerRoutes(true);
-
     return await parsing;
 
     // return {
@@ -141,6 +140,7 @@ export class gostart {
           }
         }
         if (visited) {
+          this.innerRoutes.splice(index, 1);
           continue;
         }
 
