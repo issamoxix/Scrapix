@@ -10,7 +10,7 @@ export default function Home() {
   const handleReq = async () => {
     setLoading(true);
     setData();
-    const res = await fetch(`/api/test?url=${inpt}&lim=${lim}`);
+    const res = await fetch(`/api/hello?url=${inpt}`);
     const json = await res.json();
     setData(json);
     setLoading(false);
