@@ -45,7 +45,11 @@ export class gostart {
     }
 
     return axios
-      .get(url)
+      .get(url, {
+        validateStatus: function (status) {
+          return status < 500; // Resolve only if the status code is less than 500
+        },
+      })
       .then(async (response) => {
         const text = response.data;
         const dom = new beautifuldom(text);
@@ -113,9 +117,6 @@ export class gostart {
         return await parsing;
       })
       .catch(() => {
-        console.log(
-          "YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-        );
         this.RoutesVisited.push({ link: url, ALength: 0 });
         return false;
       });
@@ -165,7 +166,6 @@ export class gostart {
           continue;
         }
 
-        console.log(`PARSING[${i}] ${link} D=${d}`);
         // console.log(link);
         this.innerRoutes.splice(index, 1);
         // console.log(link);
@@ -173,6 +173,7 @@ export class gostart {
           let roll = await this.getDom(link, true);
 
           if (await roll) {
+            console.log(`PARSING[${i}] ${link} D=${d}`);
             this.parseInnerRoutes();
           }
         } catch {
@@ -193,6 +194,8 @@ export class gostart {
     if (this.innerRoutes.length == 0 && root) {
       // console.log(this.pdfLinks);
       return this.pdfLinks;
+    } else {
+      setTimeout(() => console.log("Key"), 1000);
     }
   }
 }
