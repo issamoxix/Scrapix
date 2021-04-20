@@ -29,7 +29,7 @@ export class crunch {
       this.RoutesVisited.push({ link: url });
     }
     // const totalElements = dom.window.document.querySelectorAll("[href]");
-    console.log(dom.window.document.querySelector('[href^="/"]').href);
+    // console.log(dom.window.document.querySelector('[href^="/"]').href);
     let totalInnerRoutes = [
       ...dom.window.document.querySelectorAll('[href^="/"]'),
       ...dom.window.document.querySelectorAll(`[href*='${this.url}']`),
@@ -47,7 +47,12 @@ export class crunch {
         d.includes("_next") ||
         d.includes(".png") ||
         d.includes(".ico") ||
-        d.includes(".js")
+        d.includes(".js") ||
+        d.includes(".jpg") ||
+        d.includes(".jpeg") ||
+        d.includes("/js/") ||
+        d.includes("css") ||
+        d.includes("type=rss")
       ) {
         continue;
       }
