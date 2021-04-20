@@ -1,5 +1,3 @@
-import BeautifulDom from "beautiful-dom";
-
 const jsdom = require("jsdom");
 
 const axios = require("axios");

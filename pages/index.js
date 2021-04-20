@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -7,6 +7,7 @@ export default function Home() {
   const [lim, setLim] = useState();
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
+  const [curr, setCurr] = useState();
   const handleReq = async () => {
     setLoading(true);
     setData();
@@ -15,6 +16,16 @@ export default function Home() {
     setData(json);
     setLoading(false);
   };
+  const handlecloc = () => {
+    let datax = new Date();
+    let m = datax.getMinutes();
+    let h = datax.getHours();
+    let s = datax.getSeconds();
+    setCurr(`${h}:${m}:${s}`);
+  };
+  useEffect(() => {
+    setInterval(handlecloc, 1000);
+  }, []);
   return (
     <div className={styles.container}>
       <Head>
@@ -52,6 +63,7 @@ export default function Home() {
             />
             <input type="submit" />
           </form>
+          {curr}
           <div>{loading && <span>Loading ...</span>}</div>
         </div>
         <div>
