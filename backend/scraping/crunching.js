@@ -28,41 +28,65 @@ export class crunch {
     if (root) {
       this.RoutesVisited.push({ link: url });
     }
-    const totalElements = dom.window.document.querySelectorAll("[href]");
+    // const totalElements = dom.window.document.querySelectorAll("[href]");
+    console.log(dom.window.document.querySelector('[href^="/"]').href);
+    let totalInnerRoutes = [
+      ...dom.window.document.querySelectorAll('[href^="/"]'),
+      ...dom.window.document.querySelectorAll(`[href*='${this.url}']`),
+    ];
+    let totalPdfElements = [
+      ...dom.window.document.querySelectorAll('[href$=".pdf"]'),
+    ];
+    for (let i in totalPdfElements) {
+      this.pdfLinks.push(totalPdfElements[i].href);
+    }
+    for (let i in totalInnerRoutes) {
+      let d = totalInnerRoutes[i].href;
+      if (
+        d.includes(".css") ||
+        d.includes("_next") ||
+        d.includes(".png") ||
+        d.includes(".ico") ||
+        d.includes(".js")
+      ) {
+        continue;
+      }
+      this.innerRoutes.push(totalInnerRoutes[i].href);
+    }
     // const dom = new BeautifulDom(text);
     // const body = dom.getElementsByTagName("body")[0];
     // const title = dom.getElementsByTagName("title");
     // const aTag = body.getElementsByTagName("a");
     // const linkTag = await body.getElementsByTagName("link");
     // const totalElements = [...aTag, ...linkTag];
-    for (let i in totalElements) {
-      let d = totalElements[i].href;
-      // console.log(d.getAttribute("href"));
-      if (d) {
-        if (
-          d.includes(".css") ||
-          d.includes("_next") ||
-          d.includes(".png") ||
-          d.includes(".ico") ||
-          d.includes(".js")
-        ) {
-          continue;
-        }
-        if (d.includes(".pdf")) {
-          this.pdfLinks.push(d);
-        } else if (d[0] === "/") {
-          this.innerRoutes.push(d);
-        } else if (d.includes("http")) {
-          if (d.includes(this.url)) {
-            this.innerRoutes.push(d);
-          } else {
-            this.outerRoutes.push(d);
-          }
-        } else {
-          this.idRoutes.push(d);
-        }
-      }
-    }
+    // for (let i in totalElements) {
+    //   let d = totalElements[i].href;
+    //   // console.log(d.getAttribute("href"));
+    //   if (d) {
+    //     if (
+    //       d.includes(".css") ||
+    //       d.includes("_next") ||
+    //       d.includes(".png") ||
+    //       d.includes(".ico") ||
+    //       d.includes(".js")
+    //     ) {
+    //       continue;
+    //     }
+    //     if (d.includes(".pdf")) {
+    //       this.pdfLinks.push(d);
+    //     } else if (d[0] === "/") {
+    //       this.innerRoutes.push(d);
+    //     } else if (d.includes("http")) {
+    //       if (d.includes(this.url)) {
+    //         this.innerRoutes.push(d);
+    //       } else {
+    //         this.outerRoutes.push(d);
+    //       }
+    //     } else {
+    //       this.idRoutes.push(d);
+    //     }
+    //   }
+    // }
     await this.parseRoute();
     if (root) {
       return true;
