@@ -67,7 +67,7 @@ export class crunch {
     if (root) {
       return true;
     }
-    return this.crunch;
+    return { numberofPdfs: this.pdfLinks.length, ...this.crunch };
     // return 0;
   }
   async parseRoute() {
