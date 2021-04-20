@@ -31,12 +31,10 @@ export class crunch {
     // const totalElements = dom.window.document.querySelectorAll("[href]");
     // console.log(dom.window.document.querySelector('[href^="/"]').href);
     let totalInnerRoutes = [
-      ...body.window.document.querySelectorAll('[href^="/"]'),
-      ...body.window.document.querySelectorAll(`[href*='${this.url}']`),
+      ...body.querySelectorAll('[href^="/"]'),
+      ...body.querySelectorAll(`[href*='${this.url}']`),
     ];
-    let totalPdfElements = [
-      ...body.window.document.querySelectorAll('[href$=".pdf"]'),
-    ];
+    let totalPdfElements = [...body.querySelectorAll('[href$=".pdf"]')];
     for (let i in totalPdfElements) {
       this.pdfLinks.push(totalPdfElements[i].href);
     }
@@ -96,7 +94,7 @@ export class crunch {
     if (root) {
       return true;
     }
-    return this.crunch;
+    return { numberofPdfs: this.pdfLinks.length, ...this.crunch };
     // return 0;
   }
   async parseRoute() {
