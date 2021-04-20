@@ -25,17 +25,19 @@ export class crunch {
     const { JSDOM } = jsdom;
     const text = response.data;
     const dom = new JSDOM(`${text}`);
+    let body = dom.window.document.getElementsByTagName("body")[0];
+
     if (root) {
       this.RoutesVisited.push({ link: url });
     }
     // const totalElements = dom.window.document.querySelectorAll("[href]");
     // console.log(dom.window.document.querySelector('[href^="/"]').href);
     let totalInnerRoutes = [
-      ...dom.window.document.querySelectorAll('[href^="/"]'),
-      ...dom.window.document.querySelectorAll(`[href*='${this.url}']`),
+      ...body.window.document.querySelectorAll('[href^="/"]'),
+      ...body.window.document.querySelectorAll(`[href*='${this.url}']`),
     ];
     let totalPdfElements = [
-      ...dom.window.document.querySelectorAll('[href$=".pdf"]'),
+      ...body.window.document.querySelectorAll('[href$=".pdf"]'),
     ];
     for (let i in totalPdfElements) {
       this.pdfLinks.push(totalPdfElements[i].href);
