@@ -1,12 +1,16 @@
 import BeautifulDom from "beautiful-dom";
 
 const jsdom = require("jsdom");
-
+const fs = require("fs");
 const axios = require("axios");
 
 export class crunch {
   constructor(url) {
     this.url = url;
+    this.host = new URL(url).host.includes(".")
+      ? new URL(url).host.replace("www.", "").split(".")[0]
+      : new URL(url).host.replace(":", "");
+
     this.pdfLinks = [];
     this.idRoutes = [];
     this.innerRoutes = [];
@@ -25,6 +29,7 @@ export class crunch {
     const { JSDOM } = jsdom;
     const text = response.data;
     const dom = new JSDOM(`${text}`);
+
     if (root) {
       this.RoutesVisited.push({ link: url });
     }
@@ -67,7 +72,41 @@ export class crunch {
     if (root) {
       return true;
     }
-    return { numberofPdfs: this.pdfLinks.length, ...this.crunch };
+
+    // fs.writeFile(
+    //   `./public/crunch/${this.host}.txt`,
+    //   JSON.stringify(this.pdfLinks),
+    //   (d) => console.log(d)
+    // );
+    // if (this.pdfLinks.length != 0) {
+    //   fs.writeFile(
+    //     `public/static/${this.host}.json`,
+    //     JSON.stringify(this.pdfLinks),
+    //     () => console.log("Saved")
+    //   );
+    // }
+    let nData = { site: this.host, pdfs: this.pdfLinks };
+    fs.readFile(
+      "public/static/sites.json",
+      function readFileCallback(err, data) {
+        if (err) {
+          console.log(err);
+        } else {
+          let obj = JSON.parse(data); //now it an object
+
+          obj.sites.push(nData); //add some data
+          let json = JSON.stringify(obj); //convert it back to json
+          fs.writeFile("public/static/sites.json", json, () =>
+            console.log("SAVED")
+          ); // write it back
+        }
+      }
+    );
+    return {
+      // path: `/crunch/${this.host}.txt`,
+      numberofPdfs: this.pdfLinks.length,
+      ...this.crunch,
+    };
     // return 0;
   }
   async parseRoute() {
