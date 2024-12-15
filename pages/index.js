@@ -52,7 +52,6 @@ export default function Home() {
             />
             <input type="submit" />
           </form>
-          {lim && lim}
           <div>{loading && <span>Loading ...</span>}</div>
         </div>
         <div>
