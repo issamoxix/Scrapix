@@ -34,15 +34,8 @@ export class crunch {
       this.RoutesVisited.push({ link: url });
     }
     const totalElements = dom.window.document.querySelectorAll("[href]");
-    // const dom = new BeautifulDom(text);
-    // const body = dom.getElementsByTagName("body")[0];
-    // const title = dom.getElementsByTagName("title");
-    // const aTag = body.getElementsByTagName("a");
-    // const linkTag = await body.getElementsByTagName("link");
-    // const totalElements = [...aTag, ...linkTag];
     for (let i in totalElements) {
       let d = totalElements[i].href;
-      // console.log(d.getAttribute("href"));
       if (d) {
         if (
           d.includes(".css") ||
@@ -72,19 +65,6 @@ export class crunch {
     if (root) {
       return true;
     }
-
-    // fs.writeFile(
-    //   `./public/crunch/${this.host}.txt`,
-    //   JSON.stringify(this.pdfLinks),
-    //   (d) => console.log(d)
-    // );
-    // if (this.pdfLinks.length != 0) {
-    //   fs.writeFile(
-    //     `public/static/${this.host}.json`,
-    //     JSON.stringify(this.pdfLinks),
-    //     () => console.log("Saved")
-    //   );
-    // }
     let nData = { site: this.host, pdfs: this.pdfLinks };
     fs.readFile(
       "public/static/sites.json",
@@ -92,22 +72,20 @@ export class crunch {
         if (err) {
           console.log(err);
         } else {
-          let obj = JSON.parse(data); //now it an object
+          let obj = JSON.parse(data);
 
-          obj.sites.push(nData); //add some data
-          let json = JSON.stringify(obj); //convert it back to json
+          obj.sites.push(nData);
+          let json = JSON.stringify(obj);
           fs.writeFile("public/static/sites.json", json, () =>
             console.log("SAVED")
-          ); // write it back
+          );
         }
       }
     );
     return {
-      // path: `/crunch/${this.host}.txt`,
       numberofPdfs: this.pdfLinks.length,
       ...this.crunch,
     };
-    // return 0;
   }
   async parseRoute() {
     for (let i in this.innerRoutes) {
@@ -119,11 +97,6 @@ export class crunch {
         this.innerRoutes.splice(this.innerRoutes.indexOf("/"), 1);
       } catch {}
       if (d != "/") {
-        // console.log({
-        //   current: d,
-        //   length: this.innerRoutes.length,
-        //   routes: this.innerRoutes,
-        // });
         let index = this.innerRoutes.indexOf(d);
         let link;
         if (d.includes("http")) {
@@ -147,9 +120,7 @@ export class crunch {
           continue;
         }
 
-        // console.log(link);
         this.innerRoutes.splice(index, 1);
-        // console.log(link);
         try {
           let roll = await this.wo(link, true);
 
@@ -159,7 +130,6 @@ export class crunch {
           }
         } catch {
           this.BrokenRoutes.push(link);
-          // console.log(`Error00[${i}] ${link}`);
         }
       }
     }
